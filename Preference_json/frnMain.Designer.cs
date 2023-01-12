@@ -107,6 +107,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "frnMain";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.frnMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

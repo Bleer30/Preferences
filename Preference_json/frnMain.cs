@@ -22,11 +22,11 @@ namespace Preference_json
             {
                 this.textBox1.Text = p.Input.ToString();
                 this.WindowState = (FormWindowState)Enum.Parse(typeof(FormWindowState), p.State.ToString());
-                if(p.BtnRadio.tipo == 0)
+                if(p.BtnRadio == 1)
                 {
                     radioButton1.Checked = true;
                 }
-                if(p.BtnRadio.tipo > 0)
+                if(p.BtnRadio > 1)
                 {
                     radioButton2.Checked = true;
                 }
@@ -43,10 +43,23 @@ namespace Preference_json
         private void button1_Click(object sender, EventArgs e)
         {
             var s = this.WindowState;
-            Radio r = new Radio();
+            int r = 1;
+            if(radioButton1.Checked == true)
+            {
+                r = 1;
+            }
+            if (radioButton2.Checked == true)
+            {
+                r = 2;
+            }
             Preferences p = new Preferences((new Random()).Next(1000, 9999), textBox1.Text, s.ToString(), r);
             bd.Insertar(p);
             mostrar(bd.values);
+        }
+
+        private void frnMain_Load(object sender, EventArgs e)
+        {
+
         }
 
         //private void button2_Click(object sender, EventArgs e)

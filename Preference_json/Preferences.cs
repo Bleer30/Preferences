@@ -14,28 +14,15 @@ namespace Preference_json
         public int DNI;
         public string Input;
         public string State;
-        public Radio BtnRadio;
+        public int BtnRadio;
 
-        public Preferences(int dni, string input, string state, Radio radio)
+        public Preferences(int dni, string input, string state, int radio)
         {
             DNI = dni;
             Input = input;
             State = state;
             BtnRadio = radio;
         }
-    }
-
-    public class Radio
-    {
-        public enum Tipo
-        {
-            None = 0,
-            A = 1,
-            B = 2
-        }
-
-        public Tipo tipo;
-        public string input;
     }
 
     public class DataBase<T>
