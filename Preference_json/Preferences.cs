@@ -44,8 +44,12 @@ namespace Preference_json
 
         public void Load()
         {
-            string archivo = File.ReadAllText(ruta);
+            try
+            {
+                string archivo = File.ReadAllText(ruta);
             values = JsonConvert.DeserializeObject<List<T>>(archivo);
+            }
+            catch (Exception) { }
         }
 
         public void Insertar(T nuevo)

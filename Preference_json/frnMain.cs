@@ -53,7 +53,7 @@ namespace Preference_json
             {
                 r = 2;
             }
-            Preferences p = new Preferences((new Random()).Next(1000, 9999), textBox1.Text, s.ToString(), r);
+            Preferences p = new Preferences(3613, textBox1.Text, s.ToString(), r);
             bd.Insertar(p);
             mostrar(bd.values);
         }
