@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,34 +41,30 @@ namespace Preference_json
             mostrar(bd.values);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+        //private void button1_Click(object sender, EventArgs e)
+        //{
             
-            var s = this.WindowState;
-            int r = 1;
-            if(radioButton1.Checked == true)
-            {
-                r = 1;
-            }
-            if (radioButton2.Checked == true)
-            {
-                r = 2;
-            }
-            Preferences p = new Preferences(3613, textBox1.Text, s.ToString(), r);
-            bd.Insertar(p);
-            mostrar(bd.values);
-        }
+        //    var s = this.WindowState;
+        //    int r = 1;
+        //    if(radioButton1.Checked == true)
+        //    {
+        //        r = 1;
+        //    }
+        //    if (radioButton2.Checked == true)
+        //    {
+        //        r = 2;
+        //    }
+        //    Preferences p = new Preferences(3613, textBox1.Text, s.ToString(), r);
+        //    bd.Insertar(p);
+        //    mostrar(bd.values);
+        //}
 
-        private void frnMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void frnMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             int DNI = 3613;
             var s = this.WindowState;
             int r = 1;
+            
             if (radioButton1.Checked == true)
             {
                 r = 1;
@@ -77,6 +74,11 @@ namespace Preference_json
                 r = 2;
             }
             Preferences p = new Preferences(DNI, textBox1.Text, s.ToString(), r);
+            if (!File.Exists("bd.json"))
+            {
+                bd.Insertar(p);
+                mostrar(bd.values);
+            }
             bd.Actualizar(X => X.DNI == DNI, p);
             mostrar(bd.values);
         }
