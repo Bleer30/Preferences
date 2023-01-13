@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,7 @@ namespace Preference_json
         public void Insertar(T nuevo)
         {
             values.Add(nuevo);
+            Debug.WriteLine($"output: {nuevo}");
             Save();
         }
 
@@ -70,6 +72,7 @@ namespace Preference_json
                 if (criterio(X)) X = nuevo;
                 return X;
             }).ToList();
+            Save();
         }
     }
 }

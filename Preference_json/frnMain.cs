@@ -42,6 +42,7 @@ namespace Preference_json
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             var s = this.WindowState;
             int r = 1;
             if(radioButton1.Checked == true)
@@ -62,11 +63,22 @@ namespace Preference_json
 
         }
 
-        //private void button2_Click(object sender, EventArgs e)
-        //{
-        //    int DNI = int.Parse(textBox1.Text);
-        //    var s = this.WindowState;
-        //    Radio r = new Radio();
-        //}
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int DNI = 3613;
+            var s = this.WindowState;
+            int r = 1;
+            if (radioButton1.Checked == true)
+            {
+                r = 1;
+            }
+            if (radioButton2.Checked == true)
+            {
+                r = 2;
+            }
+            Preferences p = new Preferences(DNI, textBox1.Text, s.ToString(), r);
+            bd.Actualizar(X => X.DNI == DNI, p);
+            mostrar(bd.values);
+        }
     }
 }
