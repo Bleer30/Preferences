@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +16,7 @@ namespace Preference_json
 {
     public partial class frnMain : Form
     {
-        DataBase<Preferences> bd = new DataBase<Preferences>("bd.json");
+        DataBase<Preferences> bd = new DataBase<Preferences>($"C:\\Users\\{WindowsIdentity.GetCurrent().Name}\\AppData\\Roaming\\BAS-Reporter\\bd.json");
         
         void mostrar(List<Preferences> list)
         {
@@ -41,24 +42,6 @@ namespace Preference_json
             mostrar(bd.values);
         }
 
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-            
-        //    var s = this.WindowState;
-        //    int r = 1;
-        //    if(radioButton1.Checked == true)
-        //    {
-        //        r = 1;
-        //    }
-        //    if (radioButton2.Checked == true)
-        //    {
-        //        r = 2;
-        //    }
-        //    Preferences p = new Preferences(3613, textBox1.Text, s.ToString(), r);
-        //    bd.Insertar(p);
-        //    mostrar(bd.values);
-        //}
-
         private void frnMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             int DNI = 3613;
@@ -74,7 +57,7 @@ namespace Preference_json
                 r = 2;
             }
             Preferences p = new Preferences(DNI, textBox1.Text, s.ToString(), r);
-            if (!File.Exists("bd.json"))
+            if (!File.Exists($"C:\\Users\\{WindowsIdentity.GetCurrent().Name}\\AppData\\Roaming\\BAS-Reporter\\bd.json"))
             {
                 bd.Insertar(p);
                 mostrar(bd.values);

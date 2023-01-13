@@ -47,7 +47,7 @@ namespace Preference_json
             try
             {
                 string archivo = File.ReadAllText(ruta);
-            values = JsonConvert.DeserializeObject<List<T>>(archivo);
+                values = JsonConvert.DeserializeObject<List<T>>(archivo);
             }
             catch (Exception) { }
         }
