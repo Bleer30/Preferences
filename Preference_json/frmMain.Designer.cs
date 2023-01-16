@@ -1,6 +1,6 @@
 ﻿namespace Preference_json
 {
-    partial class frnMain
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.

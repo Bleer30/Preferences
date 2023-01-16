@@ -14,11 +14,11 @@ using static System.Windows.Forms.AxHost;
 
 namespace Preference_json
 {
-    public partial class frnMain : Form
+    public partial class frmMain : Form
     {
-        DataBase<Preferences> bd = new DataBase<Preferences>($"C:\\Users\\{WindowsIdentity.GetCurrent().Name}\\AppData\\Roaming\\BAS-Reporter\\bd.json");
+        DataBase<Preferences> bd = new DataBase<Preferences>($"C:\\Users\\{(WindowsIdentity.GetCurrent().Name).Remove(0, 4)}\\AppData\\Roaming\\BAS-Reporter\\bd.json");
         
-        void mostrar(List<Preferences> list)
+        void showPreferences(List<Preferences> list)
         {
             foreach (Preferences p in list)
             {
@@ -35,11 +35,12 @@ namespace Preference_json
             }
         }
 
-        public frnMain()
+        public frmMain()
         {
             InitializeComponent();
+             this.Text = $"{this.Text} - USER: {(WindowsIdentity.GetCurrent().Name).Remove(0, 4)}";
             bd.Load();
-            mostrar(bd.values);
+            showPreferences(bd.values);
         }
 
         private void frnMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -57,13 +58,13 @@ namespace Preference_json
                 r = 2;
             }
             Preferences p = new Preferences(DNI, textBox1.Text, s.ToString(), r);
-            if (!File.Exists($"C:\\Users\\{WindowsIdentity.GetCurrent().Name}\\AppData\\Roaming\\BAS-Reporter\\bd.json"))
+            if (!File.Exists(bd.route))
             {
-                bd.Insertar(p);
-                mostrar(bd.values);
+                bd.Insert(p);
+                showPreferences(bd.values);
             }
-            bd.Actualizar(X => X.DNI == DNI, p);
-            mostrar(bd.values);
+            bd.Update(X => X.DNI == DNI, p);
+            showPreferences(bd.values);
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,51 +32,45 @@ namespace Preference_json
     public class DataBase<T>
     {
         public List<T> values = new List<T>();
-        public string ruta;
+        public string route;
 
         public DataBase(string r)
         {
-            ruta = r;
+            route = r;
         }
 
         public void Save()
         {
             string texto = JsonConvert.SerializeObject(values);
-            File.WriteAllText(ruta, texto);
+            if (!Directory.Exists($"C:\\Users\\{(WindowsIdentity.GetCurrent().Name).Remove(0, 4)}\\AppData\\Roaming\\BAS-Reporter"))
+            {
+                Directory.CreateDirectory($"C:\\Users\\{ (WindowsIdentity.GetCurrent().Name).Remove(0, 4)}\\AppData\\Roaming\\BAS-Reporter");
+            }
+            File.WriteAllText(route, texto);
         }
 
         public void Load()
         {
             try
             {
-                string archivo = File.ReadAllText(ruta);
-                values = JsonConvert.DeserializeObject<List<T>>(archivo);
+                string file = File.ReadAllText(route);
+                values = JsonConvert.DeserializeObject<List<T>>(file);
             }
             catch (Exception) { }
         }
 
-        public void Insertar(T nuevo)
+        public void Insert(T newFile)
         {
-            values.Add(nuevo);
-            Debug.WriteLine($"output: {nuevo}");
+            values.Add(newFile);
+            Debug.WriteLine($"output: {newFile}");
             Save();
         }
 
-        public List<T> Buscar(Func<T, bool> criterio)
-        {
-            return values.Where(criterio).ToList();
-        }
-
-        public void Eliminar (Func<T, bool> criterio)
-        {
-            values = values.Where(x => !criterio(x)).ToList();
-        }
-
-        public void Actualizar(Func<T, bool> criterio, T nuevo)
+        public void Update(Func<T, bool> criterion, T newFile)
         {
             values = values.Select(X =>
             {
-                if (criterio(X)) X = nuevo;
+                if (criterion(X)) X = newFile;
                 return X;
             }).ToList();
             Save();
