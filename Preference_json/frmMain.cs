@@ -17,14 +17,14 @@ namespace Preference_json
 {
     public partial class frmMain : Form
     {
-        Json<Preference> bd = new Json<Preference>($"C:\\Users\\{(WindowsIdentity.GetCurrent().Name).Remove(0, 4)}\\AppData\\Roaming\\BAS-Reporter\\bd.json");
+        Json<Preference> preferences = new Json<Preference>($"C:\\Users\\{(WindowsIdentity.GetCurrent().Name).Remove(0, 4)}\\AppData\\Roaming\\BAS-Reporter\\Preferences.json");
 
         public frmMain()
         {
             InitializeComponent();
             this.Text = $"{this.Text} - USER: {(WindowsIdentity.GetCurrent().Name).Remove(0, 4)}";
-            bd.Load();
-            showPreferences(bd.values);
+            preferences.Load();
+            showPreferences(preferences.values);
         }
 
         void checkPreference(string reportName,string namePreference, string valuePreference)
@@ -32,20 +32,20 @@ namespace Preference_json
             var name = "";
             var value = "";
             Preference p;
-            var id = bd.checkId(bd.values, reportName, namePreference);
+            var id = preferences.checkId(preferences.values, reportName, namePreference);
             if (id != 0)
             {
                 name = namePreference;
                 value = valuePreference;
                 p = new Preference(id, reportName, name, value);
-                bd.Update(X => X.ID == id, p);
+                preferences.Update(X => X.ID == id, p);
             }
             if (id == 0)
             {
                 name = namePreference;
                 value = valuePreference;
-                p = new Preference(bd.getId(bd.values), reportName, name, value);
-                bd.Insert(p);
+                p = new Preference(preferences.getId(preferences.values), reportName, name, value);
+                preferences.Insert(p);
             }
         }
         
@@ -90,7 +90,7 @@ namespace Preference_json
             checkPreference(this.Name, "radioButton", value);
             checkPreference(this.Name, "textBox1", this.textBox1.Text);
             
-            showPreferences(bd.values);
+            showPreferences(preferences.values);
         }
     }
 }
